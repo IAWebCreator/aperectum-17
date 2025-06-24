@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApeRectum - The Real Anal Ape</title>
+    <meta name="description" content="ApeRectum ($AR) - The real anal ape of the cryptospace. Forget the hype. Embrace the bear.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        /*
+        ==========================================================================
+        1.  ROOT & VARIABLES
+        ==========================================================================
+        */
+        :root {
+            --brand-orange: #ff6b00;
+            --brand-black: #0a0a0a;
+            --brand-white: #f0f0f0;
+            --font-main: 'VT323', monospace;
+            --container-width: 1100px;
+            --section-padding: 60px 20px;
+            --card-padding: 24px;
+            --border-style: 2px solid var(--brand-orange);
+        }
+
+        /*
+        ==========================================================================
+        2.  BASE & RESET
+        ==========================================================================
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 100%;
+        }
+
+        body {
+            background-color: var(--brand-black);
+            color: var(--brand-white);
+            font-family: var(--font-main);
+            font-size: 1.25rem;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /*
+        ==========================================================================
+        3.  TYPOGRAPHY & UTILITIES
+        ==========================================================================
+        */
+        h1, h2, h3 {
+            line-height: 1.2;
+            color: var(--brand-orange);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+        }
+
+        h3 {
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            max-width: 65ch;
+        }
+
+        a {
+            color: var(--brand-orange);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--brand-white);
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: var(--section-padding);
+            border-bottom: var(--border-style);
+        }
+        
+        .section:last-of-type {
+            border-bottom: none;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /*
+        ==========================================================================
+        4.  HEADER & NAVIGATION
+        ==========================================================================
+        */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: var(--border-style);
+            position: sticky;
+            top: 0;
+            background-color: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            color: var(--brand-white);
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: none; /* Hidden on mobile */
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .mobile-nav-toggle {
+            display: block; /* Shown on mobile */
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+
+        .hamburger-icon {
+            width: 30px;
+            height: 21px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--brand-orange);
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .mobile-nav-toggle.open .hamburger-icon span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        .mobile-nav-toggle.open .hamburger-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-nav-toggle.open .hamburger-icon span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--brand-black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: right 0.4s ease-in-out;
+            z-index: 999;
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            text-align: center;
+        }
+        
+        .mobile-menu .nav-links a {
+            font-size: 2rem;
+        }
+
+        /*
+        ==========================================================================
+        5.  HERO SECTION
+        ==========================================================================
+        */
+        .hero {
+            min-height: calc(100vh - 94px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--brand-black);
+            overflow: hidden;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--brand-orange);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -2px 0 #00e5ff, 2px 2px var(--brand-orange);
+            animation: glitch-anim-2 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(10% 0 80% 0); } 20% { clip-path: inset(50% 0 10% 0); } 40% { clip-path: inset(20% 0 70% 0); } 60% { clip-path: inset(90% 0 5% 0); } 80% { clip-path: inset(40% 0 45% 0); } 100% { clip-path: inset(75% 0 15% 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(85% 0 5% 0); } 20% { clip-path: inset(25% 0 60% 0); } 40% { clip-path: inset(95% 0 2% 0); } 60% { clip-path: inset(15% 0 80% 0); } 80% { clip-path: inset(60% 0 30% 0); } 100% { clip-path: inset(80% 0 10% 0); }
+        }
+
+        .hero-logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            color: var(--brand-white);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--brand-orange);
+            color: var(--brand-black);
+            font-family: var(--font-main);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            border: 2px solid var(--brand-orange);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: var(--brand-black);
+            color: var(--brand-orange);
+        }
+
+        /*
+        ==========================================================================
+        6.  MARQUEE
+        ==========================================================================
+        */
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            background-color: var(--brand-orange);
+            color: var(--brand-black);
+            padding: 10px 0;
+            border-top: var(--border-style);
+            border-bottom: var(--border-style);
+        }
+
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee-anim 30s linear infinite;
+            font-size: 1.2rem;
+        }
+        
+        .marquee-content span {
+            padding: 0 2rem;
+        }
+
+        @keyframes marquee-anim {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /*
+        ==========================================================================
+        7.  ABOUT SECTION
+        ==========================================================================
+        */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        /*
+        ==========================================================================
+        8.  TOKENOMICS & HOW TO BUY
+        ==========================================================================
+        */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: #111;
+            border: var(--border-style);
+            padding: var(--card-padding);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 107, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .card .step-number {
+            font-size: 3rem;
+            color: var(--brand-orange);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contract-address {
+            background: #1a1a1a;
+            padding: 15px;
+            border: 1px solid #333;
+            word-wrap: break-word;
+            font-size: 1rem;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .copy-button {
+            background: var(--brand-orange);
+            color: var(--brand-black);
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        /*
+        ==========================================================================
+        9.  ROADMAP SECTION
+        ==========================================================================
+        */
+        .roadmap-list {
+            list-style: none;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .roadmap-list::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background-color: var(--brand-orange);
+            opacity: 0.3;
+        }
+
+        .roadmap-item {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .roadmap-item::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.5rem;
+            color: var(--brand-orange);
+            font-weight: bold;
+        }
+
+        .roadmap-item h3 {
+            color: var(--brand-white);
+        }
+        
+        .roadmap-item p {
+            color: #aaa;
+        }
+
+        /*
+        ==========================================================================
+        10. FOOTER
+        ==========================================================================
+        */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #000;
+        }
+
+        .footer-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+        }
+
+        .footer p {
+            font-size: 1rem;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer .token-name {
+            font-size: 1.5rem;
+            color: var(--brand-white);
+            margin-bottom: 10px;
+        }
+
+        /*
+        ==========================================================================
+        11. RESPONSIVENESS
+        ==========================================================================
+        */
+        @media (min-width: 768px) {
+            .mobile-nav-toggle {
+                display: none;
+            }
+
+            .nav-links {
+                display: flex;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="#" class="logo-container">
+            <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/4c905407-00e4-4592-9d28-2dc28d2432cb.png?" alt="ApeRectum Logo" class="logo-img">
+            <span class="logo-text">ApeRectum</span>
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#tokenomics">Tokenomics</a></li>
+                <li><a href="#buy">How to Buy</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+            </ul>
+        </nav>
+        <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+            <div class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#tokenomics">Tokenomics</a></li>
+                <li><a href="#buy">How to Buy</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero" id="home">
+            <div class="container hero-content">
+                <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/4c905407-00e4-4592-9d28-2dc28d2432cb.png?" alt="ApeRectum Bear Logo" class="hero-logo">
+                <h1 class="glitch-text" data-text="ApeRectum">ApeRectum</h1>
+                <p class="hero-subtitle">The market is a bear. We are its backside.</p>
+                <a href="#buy" class="cta-button">Get $AR</a>
+            </div>
+        </section>
+
+        <!-- MARQUEE -->
+        <div class="marquee">
+            <div class="marquee-content">
+                <span>$AR</span>
+                <span>THE REAL ANAL APE</span>
+                <span>$AR</span>
+                <span>EMBRACE THE BEAR</span>
+                <span>$AR</span>
+                <span>NO PROMISES. JUST PAIN.</span>
+                <span>$AR</span>
+                <span>THE REAL ANAL APE</span>
+                <span>$AR</span>
+                <span>EMBRACE THE BEAR</span>
+                <span>$AR</span>
+                <span>NO PROMISES. JUST PAIN.</span>
+            </div>
+        </div>
+
+        <!-- ABOUT SECTION -->
+        <section class="section fade-in" id="about">
+            <div class="container about-content">
+                <div>
+                    <h2>You came for the ape. You found the bear.</h2>
+                    <p>That's the point. Crypto is a chaotic, brutal space. It chews up dreams and spits out despair. We're not here to sell you a fantasy about rockets and moons.</p>
+                    <p>ApeRectum is a reflection of the raw, unfiltered reality. The name is a joke. The logo is a warning. This is a monument to the absurdity of it all. It's a community for those who have been through the grinder and can still laugh at the mess.</p>
+                </div>
+                <div>
+                    <h3>A statement.</h3>
+                    <p>This token is a commentary. It's for the seasoned, the cynical, the survivors. It's for those who understand that in a world of bullish apes, the bear always has the last word. We just decided to get uncomfortably close to it.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOKENOMICS SECTION -->
+        <section class="section fade-in" id="tokenomics">
+            <div class="container">
+                <h2 style="text-align: center;">Tokenomics</h2>
+                <p style="text-align: center; max-width: 50ch; margin: 0 auto 40px;">Simple. To the point. No weird mechanics.</p>
+                <div class="grid-container">
+                    <div class="card">
+                        <h3>Total Supply</h3>
+                        <p>1,000,000,000 $AR. Because a billion sounds ridiculous enough.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Taxes</h3>
+                        <p>0/0. No buy tax, no sell tax. Trade freely in this financial cesspool.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Liquidity</h3>
+                        <p>Liquidity Pool is burnt. It's gone forever, just like your hopes and dreams.</p>
+                    </div>
+                </div>
+                <div class="contract-address-wrapper" style="margin-top: 40px;">
+                    <h3 style="text-align: center;">Contract Address</h3>
+                    <div class="contract-address">
+                        <span id="contractAddress">CHiNsA2B6ZbmKnEmHPCbbX9aXJyoJzAtcLpHEDd6Qyq3</span>
+                        <button class="copy-button" id="copyButton">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW TO BUY SECTION -->
+        <section class="section fade-in" id="buy">
+            <div class="container">
+                <h2 style="text-align: center;">How To Get Rect'd</h2>
+                <div class="grid-container">
+                    <div class="card">
+                        <div class="step-number">1</div>
+                        <h3>Get a Wallet</h3>
+                        <p>Download Phantom, Solflare, or any other wallet that supports the Solana network. Keep your keys safer than your dignity.</p>
+                    </div>
+                    <div class="card">
+                        <div class="step-number">2</div>
+                        <h3>Get Some SOL</h3>
+                        <p>Buy SOL from a major exchange like Coinbase or Binance. You'll need it to trade for $AR and to pay for the soul-crushing gas fees.</p>
+                    </div>
+                    <div class="card">
+                        <div class="step-number">3</div>
+                        <h3>Swap for $AR</h3>
+                        <p>Go to a decentralized exchange like Raydium or Jupiter. Paste our contract address, connect your wallet, and swap your precious SOL for $AR.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROADMAP SECTION -->
+        <section class="section fade-in" id="roadmap">
+            <div class="container">
+                <h2 style="text-align: center;">The Roadless Map</h2>
+                <p style="text-align: center; max-width: 50ch; margin: 0 auto 40px;">Roadmaps are for projects with delusions of grandeur. We have a to-do list.</p>
+                <ul class="roadmap-list">
+                    <li class="roadmap-item">
+                        <h3>Phase 1: The Beginning</h3>
+                        <p>Launch the token. Watch the chaos unfold. Question our life choices.</p>
+                    </li>
+                    <li class="roadmap-item">
+                        <h3>Phase 2: Continued Existence</h3>
+                        <p>Survive. Maybe make some memes. Remind everyone that the market is pain.</p>
+                    </li>
+                    <li class="roadmap-item">
+                        <h3>Phase 3: The Inevitable</h3>
+                        <p>Who knows? Maybe we'll make a t-shirt. Maybe we'll fade into obscurity. That's the beauty of it.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/4c905407-00e4-4592-9d28-2dc28d2432cb.png?" alt="ApeRectum Logo" class="footer-logo">
+            <p class="token-name">$AR - ApeRectum</p>
+            <p>This is a memecoin with no intrinsic value or expectation of financial return. It is a purely speculative and volatile asset created for entertainment purposes. Do your own research and invest responsibly. You will probably lose all your money.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Mobile Navigation Toggle ---
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelectorAll('.mobile-menu .nav-links a');
+
+            mobileNavToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+                mobileNavToggle.classList.toggle('open');
+            });
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    mobileNavToggle.classList.remove('open');
+                });
+            });
+
+            // --- Copy to Clipboard ---
+            const copyButton = document.getElementById('copyButton');
+            const contractAddress = document.getElementById('contractAddress').innerText;
+
+            copyButton.addEventListener('click', () => {
+                navigator.clipboard.writeText(contractAddress).then(() => {
+                    copyButton.innerText = 'Copied!';
+                    setTimeout(() => {
+                        copyButton.innerText = 'Copy';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+
+            // --- Intersection Observer for Fade-in Animations ---
+            const faders = document.querySelectorAll('.fade-in');
+            const appearOptions = {
+                threshold: 0.2,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('visible');
+                        appearOnScroll.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+            
+            // --- Marquee Duplication for seamless loop ---
+            const marqueeContent = document.querySelector('.marquee-content');
+            if (marqueeContent) {
+                marqueeContent.innerHTML += marqueeContent.innerHTML;
+            }
+        });
+    </script>
+
+</body>
+</html>
